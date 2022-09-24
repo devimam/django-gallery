@@ -1,0 +1,850 @@
+# Created by 	- Mohammad Imam Hossain
+# Email			- imambuet11@gmail.com
+# Date 			- Sept. 24, 2022
+# All rights reserved
+
+Django Introduction
+    - Named after Django Reinhardt, a jazz manouche guitarist (1930s ~ 1950s)
+    - Pronounced as: JANG-oh (Silent D)
+    - World Online newspaper web developers developed this framework for building Web applications more quickly (ditched PHP)
+    - Released (open-source) in summer 2005 and now run by an international team of volunteers
+    - Distributed under the 3-clause BSD license (open source license)
+    - Django is stable and scalable
+    - Uses 'shared-nothing' architecture, meaning you can add hardware at any level - database servers, caching servers or web/application servers.
+
+    Links >>
+    Introduction: https://docs.djangoproject.com/en/4.0/faq/general/
+
+1. MVC Design Pattern:
+
+    Model      = An object carrying data
+    View       = Visualization of the data that the model contains
+    Controller = Controls data flow into model object and updates view whenever data changes
+
+    Links >>
+        Tutorials point MVC: https://www.tutorialspoint.com/mvc_framework/mvc_framework_introduction.htm
+        Tutorials point MVC Design Pattern: https://www.tutorialspoint.com/design_pattern/mvc_pattern.htm
+        Spring MVC: https://www.tutorialspoint.com/spring/spring_web_mvc_framework.htm
+
+2. MVT Design Pattern:
+
+    M = M (Corresponds to all the data-related logic that the user works with)
+    V = V (describes which data is presented) + T (describes how the data is presented) - it's sensible to separate content from presentation
+    C = The Django Framework itself (Acts as an interface between view and model components to process all the business logic and incoming requests, manipulate data using the model component and interact with the views to render the final output)
+
+    Links >>
+        Django MVT Tutorials point: https://www.tutorialspoint.com/django/django_overview.htm
+        Django MVT javatpoint: https://www.javatpoint.com/django-mvt
+        Django FAQ: https://docs.djangoproject.com/en/3.1/faq/general/#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names
+
+3. Installation:
+
+    Python Installation >>
+        Python Download: https://www.python.org/downloads/
+        Python Command Line: https://docs.python.org/3/using/cmdline.html
+        Commands:
+            >> python --version
+            >> python -c <command>
+            >> python -m <module-name>
+            >> python <script>
+
+    PIP Installation >>
+        pip - Package installer for python used to install packages from the Python Package Index(PyPI) and other indexes.
+        PIP User Guide: https://pip.pypa.io/en/stable/user_guide/
+        Commands:
+            >> python -m pip install <package-name>
+            >> python -m pip install <package-name>==2.1.0
+            >> python -m pip install -r requirements.txt
+            >> python -m pip install --upgrade <package-name>
+            >> python -m pip uninstall <package-name>
+            >> python -m pip uninstall -r requirements.txt
+            >> python -m pip list
+            >> python -m pip list --outdated
+            >> python -m pip show <package-name>
+            >> python -m pip search <package-name>
+            >> python -m pip freeze > requirements.txt
+
+    Virtual Environment Installation >>
+        Virtual Environment - A self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages.
+                            - Different applications can then use different virtual environments.
+                              To resolve the earlier example of conflicting requirements, application A can have its own virtual environment with version 1.0 installed
+                              while application B has another virtual environment with version 2.0. If application B requires a library be upgraded to version 3.0,
+                              this will not affect application A’s environment.
+        venv doc: https://docs.python.org/3/tutorial/venv.html
+        Commands:
+            >> python -m venv <environment_name>
+            >> For windows(to activate): <environment_path>\Scripts\activate.bat
+
+        To install Django:
+        within the active virtual environment execute the following command:
+            >> python -m pip install Django
+            >> python -m django --version
+
+4. First Django App Review: (project name = helloworld)
+
+    Links:
+        https://docs.djangoproject.com/en/4.0/intro/tutorial01/
+
+    Commands:
+        This will create a directory named <project-name> within the current directory.
+            >> django-admin startproject <project-name>
+
+        Inside the <project-name> directory
+            >> python manage.py runserver
+            >> python manage.py runserver <port-no>
+            >> python manage.py runserver <IP>:<port-no>
+
+        To create an app within that project:
+            >> python manage.py startapp <app-name>
+
+            https://docs.djangoproject.com/en/4.0/ref/django-admin/
+
+        Including apps to installed_apps list:
+            https://docs.djangoproject.com/en/4.0/ref/applications/
+
+5. Url Dispatcher: (project name = urldispatcher)
+
+    Links >>
+        Documentation: https://docs.djangoproject.com/en/4.0/topics/http/urls/
+
+        django.urls documentation: https://docs.djangoproject.com/en/4.0/ref/urls/
+        Declarations:
+        >> path(route, view, kwargs=None, name=None)
+        >> re_path(route, view, kwargs=None, name=None)
+        >> include(module, namespace=None) or, include(pattern_list) or, include((pattern_list, app_namespace), namespace=None)
+        >> register_converter(converter, type_name)
+
+        django.urls utility functions: https://docs.djangoproject.com/en/4.0/ref/urlresolvers/
+        Declarations:
+        >> reverse(viewname, urlconf=None, args=None, kwargs=None, current_app=None)
+        >> reverse_lazy(viewname, urlconf=None, args=None, kwargs=None, current_app=None)
+        >> resolve(path, urlconf=None)
+
+        httprequest.resolver_match returns a ResolverMatch object:
+        ResolverMatch attributes: func, args, kwargs, url_name, route, tried, app_name, app_names, namespace, namespaces, view_name
+
+6. Static File Handling: (project name = staticfiles)
+
+    - Create a folder named 'static' within the django app directory
+    - Use the following code in django template to access the static file from 'app directory/static/my_app/example.jpg' location.
+        {% load static %}
+        <img src="{% static "my_app/example.jpg" %}" alt="My image">
+
+    Links >>
+        Managing static files in dev: https://docs.djangoproject.com/en/4.0/howto/static-files/
+        Deploying static files in production: https://docs.djangoproject.com/en/4.0/howto/static-files/deployment/
+            Command: python manage.py collectstatic
+        django.contrib.staticfiles documentation: https://docs.djangoproject.com/en/4.0/ref/contrib/staticfiles/#module-django.contrib.staticfiles
+        Static file setting: https://docs.djangoproject.com/en/4.0/ref/settings/#settings-staticfiles
+
+7. Django Template Language: (project name = dtlproject)
+
+    Template  - A text file that can generate any text-based format (HTML, XML, CSV, etc.)
+              - It contains variables, which get replaced with values when the template is evaluated,
+                and tags, which control the logic of the template.
+    Variables - Look Like: {{ variable }}
+              - When the template engine encounters a variable, it evaluates that variable and replaces it with the result.
+              - Variable names consist of any combination of alphanumeric characters and the underscore ("_") but may not start with an underscore and a number.
+              - Use a dot(".") to access attributes of a variable.
+                Lookup order when a dot is found:
+                    - Dictionary lookup
+                    - Attribute or method lookup
+                    - Numeric index lookup
+    Filters   - Look like: {{ varname|filter1|filter2:argument }}
+              - It can modify variables for display
+              - Some important filters:
+                a)  default:"default value"
+                b)  length
+                c)  filesizeformat
+                d)  escape
+                    safe
+                e) date:"date format similar to PHP"
+                    - d='01', j='1', D='Fri', l='Friday'
+                    - m='01', n='1', M='Jan', F='January'
+                    - y='99', Y='1999'
+                    - h='01' to '12', H='00' to '23'
+                    - i='00' to '59'
+                    - s='00' to '59'
+                    - A='AM' or 'PM'
+                f)  yesno
+                    or, yesno:'yeah,no,maybe'
+                g)  urlencode
+                h)  upper or, lower or, title or, capfirst
+                i)  pluralize
+
+    Tags      - Look like: {% tag %}
+                       or, {% tag %}
+                            ... tag contents ...
+                           {% endtag %}
+              - Some create text in the output, some control flow by performing loops or logic, and some load external information into the template to be used by later variables.
+              - Some important tags:
+                a) {% autoescape off %}
+                    ... contents ...
+                   {% endautoescape %}
+
+                b) {% block block_name %}
+                    ... contents ...
+                    {% endblock %}
+
+                c) {% csrf_token %}
+
+                d) {% extends "base.html" %}
+                    - Signals that this template extends a parent template.
+                    - It must be the first template tag in that template. Template inheritance won’t work, otherwise.
+                    - Child templates don’t have to define all parent blocks.
+                    - Variables created outside of a {% block %} using the template tag 'as' syntax can’t be used inside the block.
+                    - To get the content of the block from the parent template, use {{ block.super }}
+                    - Normally the template name is relative to the template loader's root directory. For example,
+                        dir1/
+                            template.html
+                            base2.html
+                            my/
+                                base3.html
+                        base1.html
+
+                     Valid paths from template.html:
+                        {% extends './base2.html' %}
+                        {% extends '../base1.html' %}
+                        {% extends './my/base3.html' %}
+
+                e)  {% for val in list %}
+                        ... loop body ...
+                    {% endfor %}
+                    or,
+                    {% for val in list reversed %}
+                        ... loop body ...
+                    {% endfor %}
+                    or,
+                    {% for val in list %}
+                        ...
+                    {% empty %}
+                        ...
+                    {% endfor %}
+
+                    - Some predefined properties of forloop object:
+                        i) forloop.counter(1-indexed) or, forloop.counter0 or, forloop.revcounter or, forloop.revcounter0
+                        ii) forloop.first or, forloop.last
+
+                f)  {% if condition %}
+                        ...
+                    {% elif condition %}
+                        ...
+                    {% else %}
+                        ...
+                    {% endif %}
+
+                    - Use of actual parentheses in the if tag is invalid syntax.
+                    - You can use the following operators:
+                            or, and, not, in, not in, is, is not, ==, !=, >=, <=, >, <
+                    - You can also use filters in the if expression,
+                            {% if message|length >= 100 %}
+                                You have lots of messages today!
+                            {% endif %}
+
+                g) {% include './templatename.html' %}
+                   or, {% include 'templatename.html' with var=val var1=val1 %}
+
+                   - It includes the contents of the template
+                   - The template name is relative to the template loader's root directory.
+
+                h) {% load static %}
+                   <a href="{% static 'static url path' %}">Link</a>
+
+                   - Loads a custom template tag set
+
+                i) {% url 'urlpatternname' arg1=value1 arg2=value2 %}
+                   or,
+                   {% url 'urlpatternname' value1 value2 %}
+
+                   - A way to output links without violating the DRY principle by having hard-card URLs in your templates.
+
+                j) {% with simplevarname = complexvariablename %}
+                        use {{ simplevarname }} here
+                   {% endwith %}
+
+    Comments  - Single line comment: {#  #}
+              - {% comment %}
+                  multi line
+                  comment
+                {% endcomment %}
+
+    Links >>
+    DTL Introduction : https://docs.djangoproject.com/en/4.0/ref/templates/language/
+    DTL Reference: https://docs.djangoproject.com/en/4.0/ref/templates/builtins/
+    DTL for Python Programmers: https://docs.djangoproject.com/en/4.0/ref/templates/api/
+    DTL : https://docs.djangoproject.com/en/4.0/topics/templates/
+
+8. HTTP Response Object: (project name = httpresponse)
+
+    Links >> https://docs.djangoproject.com/en/4.0/ref/request-response/#httpresponse-objects
+    HttpResponseCodes >> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+    - HttpResponse:
+        - HttpResponse class lives in the django.http module.
+        - Each view is responsible for instantiating, populating, and returning an HttpResponse.
+        - Attributes:
+            content, headers, charset, status_code, reason_phrase, streaming, closed
+        - Methods:
+            __init__(content="", content_type=None, status=200, reason=None, charset=None, headers=None)
+            __setitem(header, value), __getitem(header), __delitem(header), has_header(header)
+            set_cookie(key, value="", max_age=None, expires=None, path="/", domain=None, secure=False, httponly=False, samesite=None), delete_cookie(key, path="/", domain=None, samesite=None)
+            close()
+            write(content), writelines(lines), flush(), getvalue()
+        - Subclasses: HttpResponseRedirect, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError
+
+   - Other classes: JsonResponse, StreamingHttpResponse, FileResponse
+
+   - Shortcut functions link >> https://docs.djangoproject.com/en/4.0/topics/http/shortcuts/
+     Function configuration:
+        >> render(request, template_name, context=None, content_type=None, status=None, using=None)
+            - Set BACKEND to 'django.template.backends.django.DjangoTemplates' to configure a Django template engine. When APP_DIRS is True, DjangoTemplates engines look for templates in the templates subdirectory of installed applications.
+            - Set BACKEND to 'django.template.backends.jinja2.Jinja2' to configure a Jinja2 engine. When APP_DIRS is True, Jinja2 engines look for templates in the jinja2 subdirectory of installed applications.
+        >> redirect(to, *args, permanent=False, **kwargs)
+           Here 'to' can be a model object, a view name possibly with arguments or, an absolute/relative URL
+
+9. HTTP Request Object:  (project name = httprequest)
+
+    Http Request - When a page is requested, Django creates an HttpRequest object that contains metadata about the request. Then Django loads the appropriate view, passing the HttpRequest as the first argument to the view function. Each view is responsible for returning an HttpResponse object.
+                 - HttpRequest object is defined in the django.http module.
+
+                 HTTP headers >> https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
+                 HttpRequest Link >> https://docs.djangoproject.com/en/4.0/ref/request-response/#httprequest-objects
+                 Python Magic Methods >> https://rszalski.github.io/magicmethods/
+
+                - Important properties:
+                    ->  scheme  - returns http or https
+                    ->  body    - raw HTTP request body as bytestring
+                    ->  path    - returns the full path to the requested page, not including scheme or domain or query string
+                    ->  method  - string(in uppercase) representing the HTTP method used in the request, ex: 'GET' or, 'POST'
+                    ->  GET     - a dictionary like QueryDict object containing all HTTP GET parameters
+                    ->  POST    - a dictionary like QueryDict object containing all HTTP POST parameters
+                    ->  COOKIES - a dictionary containing all cookies. Keys and values are strings.
+                    ->  FILES   - a dictionary like object containing all uploaded files. Each key in FILES is the HTML name property value and each value in FILES is an UploadedFile object.
+                    ->  META    - a dictionary containing all available HTTP headers.
+                                - some important headers:
+                                    CONTENT_LENGTH, CONTENT_TYPE, HTTP_ACCEPT, HTTP_HOST, QUERY_STRING, REMOTE_ADDR, REMOTE_HOST, REQUEST_METHOD, SERVER_NAME, SERVER_PORT
+
+                    --------------------------------------middleware------------------------------------------------------------------------------------------------------------------------------------------------
+                    ->  session - a readable and writable, dictionary-like object that represents the current session.
+                    ->  site    - an instance of Site or RequestSite as returned by get_current_site() representing the current site.
+                    ->  user    - An instance of AUTH_USER_MODEL representing the currently logged-in user. If the user isn't currently logged in, user will be set to an isntance of AnonymousUser. You can check using is_authenticated method.
+                    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    - QueryDict object:
+        -> __init__(query_string=None, mutable=False, encoding=None)
+
+        ->  copy()                  - returns a copy of the object that is mutable
+        -> __contains__(key)        - returns True if the given key is set
+                                    - use "key in QueryDictObject" for checking presence of the key
+
+        ->  __getitem__(key)        - returns the value for the given key. For more than one value, returns the last one.
+                                    - use QueryDictObject['key'] for accessing the key value
+        ->  get(key, default=None)  - same as __getitem__(), except returns a default value if the key doesn't exist
+        ->  getlist(key, default=None) - returns a list of the data with the requested key or an empty list
+
+        ->  __setitem__(key, value) - sets the given key to [value], can only be called on QueryDict.copy() object
+                                    - use QueryDictObject['key']=value for setting that key value
+        ->  setlist(key, list_)     - sets the given key to list_
+        ->  appendlist(key, item)   - appends an item to the internal list associated with key
+
+        ->  pop(key)                - returns a list of values for the given key and removes them from the dictionary.
+
+        ->  items(), values()       - similar to dict.items(), dict.values() except this uses the same last-value logic.
+        ->  lists()                 - like items() except it includes all values, as a list, for each member of the dictionary.
+
+10. Django Forms: (project name = djangoforms)
+
+    Link >>
+        Introduction : https://docs.djangoproject.com/en/4.0/topics/forms/
+
+    Django handles 3 distinct parts of the work involved in forms:
+        Task 1 - preparing and restructuring data to make it ready for rendering
+        Task 2 - creating HTML forms for the data
+        Task 3 - receiving and processing submitted forms and data from the client
+
+    - A form’s fields are themselves classes; they manage form data and perform validation when a form is submitted.
+    - A model class’s fields map to database fields, a form class’s fields map to HTML form <input> elements.
+    - A ModelForm maps a model class's fields to HTML form <input> elements via a Form.
+
+    - Working with form templates:
+        - If your form is called form in the context, {{ form }} will render its <label> and <input> elements appropriately.
+        - Each field is available as an attribute of the form using {{ form.name_of_field }}, and in a Django template, will be rendered appropriately.
+        - Useful attributes on {{ field }} address: (here, field=form.name_of_field)
+            {% for field in form %} ... {% endfor %}
+            {% for hidden in form.hidden_fields %} ... {% endfor %}
+            {% for visible in form.visible_fields %} ... {% endfor %}
+            {{ form.non_field_errors }} - generate all the non-field errors
+
+            {{ field.label_tag }}, {{ field.label }}, {{ field.id_for_label }}
+            {{ field }},           {{ field.value }}, {{ field.html_name }}
+            {{ field.help_text }}
+            {{ field.errors }}
+            {{ field.is_hidden }}
+            {{ field.field }} - Field instance from the form class to access Field attributes, ex: {{ field.field.max_length }}
+
+    Link >>
+        django.forms API documentation : https://docs.djangoproject.com/en/4.0/ref/forms/api/#django.forms.Form
+
+    Form Class: A Form instance is either bound(capable of validating data) to a set of data, or unbound.
+        -> To create an unbound Form instance: f = ContactForm()
+        -> To bind data to a form:
+                        f = ContactForm(datadict)
+             >> The dictionary keys represents the field names which also corresponds to the attributes in your Form class.
+             >> The values are the data you're trying to validate.
+        -> To set initial value for unbound form: f = ContactForm(initial={'fieldname':'fieldvalue'})
+        -> To check whether the form is bounded or not: f.is_bound
+        -> To set the id and label suffix fields: f = ContactForm(auto_id='id_for_%s', label_suffix='')
+           set auto_id=False to avoid generating <label></label> portion.
+
+        -> f.is_valid() - runs validation and returns a boolean designating whether the data was valid
+        -> f.errors, f.errors.as_data(), f.errors.as_json(), f.non_field_errors()
+        -> f.add_error(field, error) - use field=None for non_field_errors, f.has_error(field)
+        -> f.has_changed() - to check if the form data has been changed from the initial data
+        -> f.changed_data - returns a list of names of the fields whose values in the form's bound data differ from the initial
+        -> f.fields, f.fields['field_name']
+        -> f.cleaned_data - returns the cleaned(normalized) valid data and if the data does not validate then the cleaned_data dictionary does not contain this data
+        -> f.is_multipart() - tells whether the form requires multipart encoding for submission
+
+        -> f.as_p(), f.as_ul(), f.as_table(), f.field_order, f.order_fields(field_order)
+
+    BoundField Class:
+            - used to display HTML or access attributes for a single field of a Form instance.
+            - the __str__() method of this object displays the HTML for this field
+            - To retrieve a single BoundField, use dictionary lookup syntax on your form using the field's name as the key, form['field_name']
+
+        -> auto_id - the HTML id attribute for this BoundField, returns an empty string if Form.auto_id is False
+        -> id_for_label - use this property to render(in HTML) the ID of this field
+
+        -> label - label of the field
+        -> label_tag() - render the label (in HTML) tag of a form field
+
+        -> data - returns the data for this BoundField or None
+        -> value() - render the raw value of this field
+
+        -> errors - returns errors of this bound field as a list like object
+        -> field - the form field instance from the form class that this BoundField wraps
+        -> form - the form instance this boundfield is bound to
+
+        -> help_text - help text of the field
+        -> is_hidden - true if hidden field
+
+        -> html_name - the value of HTML name attribute
+        -> name - the name of this field in the (Django)form
+
+    Form Fields:
+        Different types of form fields link : https://docs.djangoproject.com/en/4.0/ref/forms/fields/
+
+        Core properties and methods:
+            -> Field(**kwargs)
+            -> required=True/False, Default: True
+            -> label="human friendly label"
+            -> label_suffix=" -> "
+
+            -> initial="initial value"
+            -> widget = lets you specify a Widget class to use
+            -> help_text = "specify descriptive text for this field"
+            -> error_messages = {'required':'required error message', 'invalid':'invalid error message'}
+            -> validators = a list of validation functions for this field
+
+            -> disabled = True/False
+            -> has_changed()
+
+        BooleanField
+            -> empty value = False
+            -> normalizes to python True/False value
+            -> error message keys: required
+            -> widget: CheckboxInput that generates <input type='checkbox'>
+
+        CharField
+            -> empty value = content of 'empty_value' property
+            -> normalizes to python string
+            -> error message keys: required, max_length, min_length
+            -> optional arguments: max_length, min_length, strip (=True default), empty_value (='' default)
+            -> widget: TextInput that generates <input type="text" >
+
+        ChoiceField
+            -> empty value = ''
+            -> normalizes to python string
+            -> error message key: required, invalid_choice
+            -> argument: choices (a list of 2 tuples)
+            -> widget: Select that generates <select><option ...>...</select>
+
+        DateField or, DateTimeField or, TimeField
+            -> empty value = None
+            -> normalizes to a python datetime.date or, datetime.datetime or, datetime.time object
+            -> error message key: required, invalid
+            -> arguments: input_formats
+               default formats: https://docs.djangoproject.com/en/3.0/ref/settings/#std:setting-DATE_INPUT_FORMATS
+            -> widget: DateInput, DateTimeInput, TimeInput that generates <input type="text" ... >
+
+        DecimalField
+            -> empty value = None
+            -> normalizes to a python decimal value
+            -> error message keys: required, invalid, max_value, min_value, max_digits, max_decimal_places, max_whole_digits
+            -> arguments: max_value, min_value, max_digits, decimal_places
+            -> widget: NumberInput that generates <input type="number">
+
+        IntegerField
+            -> empty value = None
+            -> normalizes to python integer
+            -> error message keys: required, invalid, max_value, min_value
+            -> arguments: max_value, min_value
+            -> widget: NumberInput that generates <input type="number">
+
+        EmailField
+            -> empty value = ''
+            -> normalizes to python string
+            -> error message key: required, invalid
+            -> optional arguments: max_length, min_length, empty_value
+            -> widget: EmailInput that generates <input type="email">
+
+        URLField
+            -> empty value = ''
+            -> normalizes to python string
+            -> error message keys: required, invalid
+            -> arguments: max_length, min_length, empty_value
+            -> widget: URLInput that generates <input type="url">
+
+        FileField
+            -> empty value = None
+            -> normalizes to an UploadedFile object
+            -> error message keys: required, invalid, missing, empty, max_length
+            -> widget: ClearableFileInput that generates <input type="file"> with an additional checkbox input to clear the field's value, if the field is not required and has initial data.
+
+        ImageField
+            -> empty value = None
+            -> normalize to an UploadedFile objects
+            -> error message keys: required, invalid, missing, empty, invalid_image
+            -> widget: ClearableFileInput
+            -> The UploadedFile object will have an additional 'image' attribute containing the Pillow Image instance.
+
+        Different Types of widgets: https://docs.djangoproject.com/en/4.0/ref/forms/widgets/
+            -> Widget(attrs=None), example: forms.TextInput(attrs={'size':10, 'title': 'Your name'})
+
+            -> PasswordInput: <input type="password">
+            -> HiddenInput: <input type="hidden">
+            -> Textarea: <textarea></textarea>
+            -> SelectMultiple: <select multiple>...</select>
+            -> RadioSelect: <div><div><input type="radio" name="..."></div>...</div>
+               or, use the attributes: id_for_label, choice_label, tag while traversing each radio button {% for radio in myform.radiofield %} ... {% endfor %}
+
+11. Validators in Django: (project name = customvalidators )
+
+    Links >>
+        Validators: https://docs.djangoproject.com/en/4.0/ref/validators/
+        Form and Field validators: https://docs.djangoproject.com/en/4.0/ref/forms/validation/
+        Lazy translation: https://docs.djangoproject.com/en/4.0/topics/i18n/translation/ # to translate strings lazily – when the value is accessed rather than when they’re called.
+
+    Built-in validatiors:
+        Module: from django.core import validators
+        Class: RegexValidator, EmailValidator, URLValidator, MaxValueValidator, MinValueValidator, MaxLengthValidator, MinLengthValidator, DecimalValidator, FileExtensionValidator, ProhibitNullCharactersValidator
+        Instances: validate_email, validate_slug, validate_unicode_slug, validate_ipv4_address, validate_ipv6_address, validate_ipv46_address, validate_comma_separated_integer_list, int_list_validator, validate_image_file_extension
+
+    Example 1:
+    -----------
+    from django.core.exceptions import ValidationError
+    from django.utils.translation import gettext_lazy as _
+
+    def validate_even(value):
+        if value % 2 != 0:
+            raise ValidationError(
+                _('%(value)s is not an even number'),
+                params={'value': value},
+            )
+
+    Example 2:
+    -----------
+    to raise a validation error:
+    raise ValidationError(
+        _('Invalid value: %(value)s'),
+        code='invalid',
+        params={'value':'42'},
+    )
+
+    Example 3:
+    -----------
+    to raise multiple errors:
+    raise ValidationError([
+        ValidationError(_('Error 1'), code='error1'),
+        ValidationError(_('Error 2'), code='error2'),
+    ])
+
+12. File Uploads: (project name = fileupload)
+
+    Python file read-write operations >> https://www.programiz.com/python-programming/file-operation
+    Links >> https://docs.djangoproject.com/en/4.0/topics/http/file-uploads/
+
+    Here,
+    -> request.FILES will only contain data if the request method was POST and the <form> that posted the request has the attribute enctype="multipart/form-data"
+    -> By default, if an uploaded file is smaller than 2.5 megabytes, Django will hold the entire contents of the upload in memory. This means that saving the file involves only a read from memory and a write to disk and thus is very fast.
+    -> However, if an uploaded file is too large, Django will write the uploaded file to a temporary file stored in your system’s temporary directory.
+
+    UploadedFile Object:
+        Links >>
+            UploadedFile object >> https://docs.djangoproject.com/en/4.0/ref/files/uploads/#django.core.files.uploadedfile.UploadedFile
+            src Code >> https://docs.djangoproject.com/en/4.0/_modules/django/core/files/uploadedfile/
+            File object >> https://docs.djangoproject.com/en/4.0/ref/files/file/
+
+        -> UploadedFile is inherited from File object.
+        -> each entry of the dictionary of request.FILES returns an UploadedFile object
+
+        UploadedFile object:
+        -> read() - reads the entire uploaded data
+        -> multiple_chunks(chunk_size=None) - returns True if the uploaded file is big enough to require reading in multiple chunks
+        -> chunks() - a generator returning chunks of the file
+        -> name - the name of the uploaded file
+        -> size - size in bytes of the uploaded file
+        -> content_type - the content-type header uploaded with the file (trust but verify)
+        -> charset - returns the charset of the file
+
+    FileSystemStorage class:
+        Links >>
+            - https://docs.djangoproject.com/en/4.0/ref/files/storage/
+            - https://docs.djangoproject.com/en/4.0/topics/files/
+
+        -> Module: from django.core.files.storage import FileSystemStorage
+        -> FileSystemStorage(location=None, base_url=None, file_permission_mode=None, directory_permission_mode=None)
+        -> Default location is MEDIA_ROOT and default base_url is MEDIA_URL
+        -> It inherits the Storage class
+        -> Storage class:
+            -> delete(name) - delete the file referenced by name
+            -> exists(name) - returns True if the file exists
+            -> open(name, mode='rb') - opens the file given by name.
+            -> save(name, content, max_length=None) - saves a new file using the storage system, preferably with the name specified. If there already exists a file with this name, the storage system may modify the filename as necessary to get a unique name. The actual name of the stored file will be returned.
+            -> size(name) - returns the total size, in bytes, of the file referenced by name
+            -> url(name) - returns the URL where the contents of the file referenced by name can be accessed.
+            -> get_accessed_time(name) - returns a datetime of the last accessed time of the file.
+            -> get_created_time(name) - returns a datetime of the creation time of the file
+
+    URL configurations settings:
+        Link >> https://docs.djangoproject.com/en/4.0/ref/urls/#static
+
+        Example:
+            from django.conf import settings
+            from django.conf.urls.static import static
+
+            urlpatterns=[
+                # ... the rest of your URLconf goes here
+            ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+13. Email Sending: (project name= djangoemail)
+
+    Link >>
+        django.core.mail API: https://docs.djangoproject.com/en/4.0/topics/email/
+        Settings: https://docs.djangoproject.com/en/4.0/ref/settings/#email-backend
+        Stackoverflow: https://stackoverflow.com/questions/6367014/how-to-send-email-via-django
+
+    Example:
+    ---------
+    from django.core.mail import send_mail
+
+    send_mail(
+        'email subject',        # a string
+        'email body',           # a message
+        'from@example.com',     # a string, if None, django will use DEFAULT_FROM_EMAIL setting
+        ['to@example.com', 'to@example.com'], # a list of strings
+        fail_silently=False,    # a boolean, when False this function will raise an exception smtplib.SMTPException if an error occurs
+    )
+
+    Other option:
+        ->  send_mass_mail(datatuple, fail_silently=False, auth_user=None, auth_password=None, connection=None)
+            here, datatupe will look like: (subject, message, from_email, recipient_list)
+
+    Required Configuration Settings:
+    ---------------------------------
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+
+    EMAIL_HOST_USER = '' #your email address from where the emails will be sent. This is used to authenticate to the SMTP server.
+    EMAIL_HOST_PASSWORD = '' #Must generate specific password for your app in [gmail settings]. This is used to authenticate to the SMTP server.
+
+    - If 2 factor authentication is on: then use the app password
+    - Otherwise use the real email password and turn on the less secure app access
+
+14. Django Models: (project name= djmodels)
+
+    Configuration:
+    --------------
+    Links >>
+        Database Configurations: https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+        Database Support Notes: https://docs.djangoproject.com/en/4.0/ref/databases/#mysql-notes
+
+    - Django supports MySQL 5.6 and higher
+    - Django uses default InnoDB storage engine (Fully transactional and supports foreign key reference)
+    - MySQL DB API Drivers (thread safe and provides connection pooling):
+        - mysqlclient (recommended):
+            installation >> https://pypi.org/project/mysqlclient/
+            command >> py -m pip install mysqlclient
+            documentation>> https://mysqlclient.readthedocs.io/user_guide.html#functions-and-attributes
+
+        - MySQL Connector/Python (driver from Oracle):
+            installation >> https://dev.mysql.com/downloads/connector/python/
+            documentation >> https://dev.mysql.com/doc/connector-python/en/
+
+    Settings:
+        DATABASES = {
+            # configuring default database
+            'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': 'databasename',
+                'USER': 'databaseusername',
+                'PASSWORD': 'datbasepassword',
+                'HOST': '127.0.0.1',            # empty string means localhost
+                'PORT': '5432',
+            }
+        }
+
+    -> Other options: ATOMIC_REQUESTS, AUTOCOMMIT, CONN_MAX_AGE, OPTIONS, TIME_ZONE, TEST, ... ...
+
+    Way 1: Using Django Model API:
+    ------------------------------
+    Check the Django Models Guide.txt file
+
+    Way 2: Using Custom SQL Directly (with Data Access Object(DAO) design pattern optionally)
+    ------------------------------------------------------------------------------------------
+        -> Link: https://docs.djangoproject.com/en/4.0/topics/db/sql/#executing-custom-sql-directly
+        -> file read-write in python: https://www.programiz.com/python-programming/file-operation
+        -> The object django.db.connection represents the default database connection. To use the database connection call connection.cursor() to get a cursor object.
+           Python DB API ref link: https://www.python.org/dev/peps/pep-0249/
+        -> To establish a connection with database:
+            from django.db import connection
+            >>  with connection.cursor() as c:
+                c.execute(...)
+            or,
+            >>  c = connection.cursor()
+                try:
+                    c.execute("mysql query")
+                finally:
+                    c.close()
+
+        -> connection object:
+            methods >> close(), commit(), rollback(), cursor()
+
+        -> cursor object:
+            attributes >>
+                - description : sequence of 7 items : name, type_code, display_size, internal_size, precision, scale, null_ok
+
+                - rowcount : specifies the number of rows that the last execute produced(for DQL) or affected(for DML) or -1
+            methods >>
+                - callproc(procname[,parameters])
+                - close()
+                - execute(operation[,parameters])
+                - executemany(operation, seq_of_parameters)
+
+                - fetchone() : returns a single sequence or None
+                - fetchmany([size=cursor.arraysize]) : returns a list of tuples or an empty sequence
+                - fetchall() : returns a list of tuples or empty list
+
+                - nextset()
+
+15 Django Views: (project name = djangoviews)
+
+    Links >>
+        - Method based view: https://docs.djangoproject.com/en/4.0/topics/http/views/
+        - Decorators: https://docs.djangoproject.com/en/4.0/topics/http/decorators/
+            - decorators: @require_http_methods, @require_GET, @require_POST
+            - Example:
+                from django.views.decorators.http import require_http_methods
+
+                @require_http_methods(["GET", "POST"])
+                def my_view(request):
+                    # Only GET or POST requests make it this far
+                    # ...
+                    pass
+
+        - Class based view:
+            - https://docs.djangoproject.com/en/4.0/topics/class-based-views/
+            - https://docs.djangoproject.com/en/4.0/topics/class-based-views/intro/
+            - https://docs.djangoproject.com/en/4.0/topics/class-based-views/generic-display/
+            - https://docs.djangoproject.com/en/4.0/ref/class-based-views/
+            - https://docs.djangoproject.com/en/4.0/ref/class-based-views/base/
+            - https://docs.djangoproject.com/en/3.2/ref/class-based-views/generic-display/
+            - https://docs.djangoproject.com/en/3.2/ref/class-based-views/generic-editing/
+
+            - Example:
+                from django.http import HttpResponse
+                from django.views import View
+
+                class MyView(View):
+                    def get(self, request):
+                        # <view logic>
+                        return HttpResponse('result')
+
+                ----------------------------
+                # urls.py
+                from django.urls import path
+                from myapp.views import MyView
+
+                urlpatterns = [
+                    path('about/', MyView.as_view()),
+                ]
+
+            - The list of HTTP method names that this view will accept:
+                    get, post, put, patch, delete, head, options, trace
+
+
+16. Sessions and Authentication in Django: (project name = djlogin)
+
+    -> To enable session:
+        - add 'django.contrib.sessions.middleware.SessionMiddleware' within MIDDLEWARE setting
+        - add 'djanog.contrib.sessions' in the INSTALLED_APPS setting
+
+    -> Different types of Sessions in Django:
+        - Database-backed sessions: https://docs.djangoproject.com/en/4.0/topics/http/sessions/#using-database-backed-sessions
+        - Cached sessions: https://docs.djangoproject.com/en/4.0/topics/http/sessions/#using-cached-sessions
+        - File-based sessions: https://docs.djangoproject.com/en/4.0/topics/http/sessions/#using-file-based-sessions
+        - Cookie-based sessions: https://docs.djangoproject.com/en/4.0/topics/http/sessions/#using-cookie-based-sessions
+
+    -> If the SessionMiddleware is activated
+       then the HttpRequest object of view function will have a session attribute which is a dictionary-like object.
+    -> request.session object:
+        - to get value: get_value = request.session['session_var']
+        - to set value: request.session['session_var']='set value'
+        - to delete value: del request.session['session_var']
+        - to search a session variable: 'session_var' in request.session
+        - get(key, default=None)
+        - pop(key, default=__not_given)
+        - keys()
+        - items()
+        - flush()
+        - get_session_cookie_age(), get_expiry_age(), get_expiry_date()
+        - set_expiry(value) #value=no of seconds/datetime/0(browser closed)/None
+        - set_test_cookie(), test_cookie_worked(), delete_test_cookie()
+
+    -> By default, Django serializes session data using JSON.
+    -> For database-backed session, you need to add 'django.contrib.sessions' to your INSTALLED_APPS setting
+       and run "py manage.py migrate" to install the single database table that stores session data.
+
+    Authentication:
+    ----------------
+    -> Links: https://docs.djangoproject.com/en/4.0/topics/auth/passwords/
+    -> By default, Django uses PBKDF2 algorithm with a SHA256 hash that is quite secure and requires massive amounts of computing time to break.
+    -> To manage user password manually:
+        - Module: from django.contrib.auth.hashers import *
+        - PBDKF2 password format: <algorithm>$<iterations>$<salt>$<hash>
+        - To encode the password call, make_password(plain_text_password)
+        - To match the password call, check_password(plain_text_password, encoded_password)
+
+17. AJAX:
+    - Links:
+            - https://docs.djangoproject.com/en/3.1/ref/csrf/
+            - https://docs.djangoproject.com/en/4.1/howto/csrf/#using-csrf-protection-with-ajax
+            - https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX
+            - https://github.com/js-cookie/js-cookie/
+
+    - Follow the pdf notes
+
+18. Django Rest Framework: (project name = restapi)
+
+    Link >> https://www.django-rest-framework.org/tutorial/1-serialization/
+
+    Installationy:
+        - python -m pip install djangorestframework
+
+Others:
+- https://docs.djangoproject.com/en/4.0/ref/utils/
+- https://docs.djangoproject.com/en/4.0/intro/tutorial02/#introducing-the-django-admin
+- https://docs.djangoproject.com/en/4.0/intro/tutorial07/#customize-the-admin-form
