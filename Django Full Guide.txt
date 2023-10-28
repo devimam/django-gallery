@@ -1,19 +1,19 @@
 # Created by 	- Mohammad Imam Hossain
 # Email			- imambuet11@gmail.com
-# Date 			- Sept. 24, 2022
+# Update Date 	- Oct 20, 2023
 # All rights reserved
 
 Django Introduction
     - Named after Django Reinhardt, a jazz manouche guitarist (1930s ~ 1950s)
     - Pronounced as: JANG-oh (Silent D)
-    - World Online newspaper web developers developed this framework for building Web applications more quickly (ditched PHP)
+    - World Online Newspaper web developers developed this framework for building Web applications more quickly (ditched PHP)
     - Released (open-source) in summer 2005 and now run by an international team of volunteers
     - Distributed under the 3-clause BSD license (open source license)
     - Django is stable and scalable
     - Uses 'shared-nothing' architecture, meaning you can add hardware at any level - database servers, caching servers or web/application servers.
 
     Links >>
-    Introduction: https://docs.djangoproject.com/en/4.0/faq/general/
+    Introduction: https://docs.djangoproject.com/en/4.2/faq/general/
 
 1. MVC Design Pattern:
 
@@ -35,7 +35,7 @@ Django Introduction
     Links >>
         Django MVT Tutorials point: https://www.tutorialspoint.com/django/django_overview.htm
         Django MVT javatpoint: https://www.javatpoint.com/django-mvt
-        Django FAQ: https://docs.djangoproject.com/en/3.1/faq/general/#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names
+        Django FAQ: https://docs.djangoproject.com/en/4.2/faq/general/#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names
 
 3. Installation:
 
@@ -67,23 +67,24 @@ Django Introduction
     Virtual Environment Installation >>
         Virtual Environment - A self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages.
                             - Different applications can then use different virtual environments.
-                              To resolve the earlier example of conflicting requirements, application A can have its own virtual environment with version 1.0 installed
+                              To resolve conflicting requirements, application A can have its own virtual environment with version 1.0 installed
                               while application B has another virtual environment with version 2.0. If application B requires a library be upgraded to version 3.0,
                               this will not affect application A’s environment.
         venv doc: https://docs.python.org/3/tutorial/venv.html
         Commands:
             >> python -m venv <environment_name>
-            >> For windows(to activate): <environment_path>\Scripts\activate.bat
+            >> For windows(to activate): <environment_path>\Scripts\activate
+            >> To deactivate: deactivate
 
         To install Django:
-        within the active virtual environment execute the following command:
-            >> python -m pip install Django
-            >> python -m django --version
+            Within the active virtual environment execute the following command:
+                >> python -m pip install Django
+                >> python -m django --version
 
 4. First Django App Review: (project name = helloworld)
 
     Links:
-        https://docs.djangoproject.com/en/4.0/intro/tutorial01/
+        https://docs.djangoproject.com/en/4.2/intro/tutorial01/
 
     Commands:
         This will create a directory named <project-name> within the current directory.
@@ -97,24 +98,24 @@ Django Introduction
         To create an app within that project:
             >> python manage.py startapp <app-name>
 
-            https://docs.djangoproject.com/en/4.0/ref/django-admin/
+            https://docs.djangoproject.com/en/4.2/ref/django-admin/
 
         Including apps to installed_apps list:
-            https://docs.djangoproject.com/en/4.0/ref/applications/
+            https://docs.djangoproject.com/en/4.2/ref/applications/
 
 5. Url Dispatcher: (project name = urldispatcher)
 
     Links >>
-        Documentation: https://docs.djangoproject.com/en/4.0/topics/http/urls/
+        Documentation: https://docs.djangoproject.com/en/4.2/topics/http/urls/
 
-        django.urls documentation: https://docs.djangoproject.com/en/4.0/ref/urls/
+        django.urls documentation: https://docs.djangoproject.com/en/4.2/ref/urls/
         Declarations:
         >> path(route, view, kwargs=None, name=None)
         >> re_path(route, view, kwargs=None, name=None)
         >> include(module, namespace=None) or, include(pattern_list) or, include((pattern_list, app_namespace), namespace=None)
         >> register_converter(converter, type_name)
 
-        django.urls utility functions: https://docs.djangoproject.com/en/4.0/ref/urlresolvers/
+        django.urls utility functions: https://docs.djangoproject.com/en/4.2/ref/urlresolvers/
         Declarations:
         >> reverse(viewname, urlconf=None, args=None, kwargs=None, current_app=None)
         >> reverse_lazy(viewname, urlconf=None, args=None, kwargs=None, current_app=None)
@@ -129,33 +130,55 @@ Django Introduction
     - Use the following code in django template to access the static file from 'app directory/static/my_app/example.jpg' location.
         {% load static %}
         <img src="{% static "my_app/example.jpg" %}" alt="My image">
+    - The default will find files stored in the STATICFILES_DIRS setting and in a static subdirectory of each app.
+      If multiple files with the same name are present, the first file that is found will be used.
 
     Links >>
-        Managing static files in dev: https://docs.djangoproject.com/en/4.0/howto/static-files/
-        Deploying static files in production: https://docs.djangoproject.com/en/4.0/howto/static-files/deployment/
-            Command: python manage.py collectstatic
-        django.contrib.staticfiles documentation: https://docs.djangoproject.com/en/4.0/ref/contrib/staticfiles/#module-django.contrib.staticfiles
-        Static file setting: https://docs.djangoproject.com/en/4.0/ref/settings/#settings-staticfiles
+        Managing static files in dev: https://docs.djangoproject.com/en/4.2/howto/static-files/
+        Deploying static files in production: https://docs.djangoproject.com/en/4.2/howto/static-files/deployment/
+                Command: py manage.py collectstatic
+        django.contrib.staticfiles documentation: https://docs.djangoproject.com/en/4.2/ref/contrib/staticfiles/#module-django.contrib.staticfiles
+        Static file setting: https://docs.djangoproject.com/en/4.2/ref/settings/#settings-staticfiles
 
 7. Django Template Language: (project name = dtlproject)
 
     Template  - A text file that can generate any text-based format (HTML, XML, CSV, etc.)
-              - It contains variables, which get replaced with values when the template is evaluated,
-                and tags, which control the logic of the template.
+              - It contains Variables, which get replaced with values when the template is evaluated,
+                and Tags, which control the logic of the template.
+              - Templates Engine Configuration:
+                       TEMPLATES =  [
+                                      {
+                                          "BACKEND": "django.template.backends.django.DjangoTemplates",
+                                          "DIRS": [],
+                                          "APP_DIRS": True,
+                                          "OPTIONS": {
+                                              # ... some options here ...
+                                              'context_processors': [
+                                                                        'django.template.context_processors.debug',         #Context variables: debug, sql_queries
+                                                                        'django.template.context_processors.request',       #Context variables: request (current HttpRequest)
+                                                                        'django.contrib.auth.context_processors.auth',      #Context variables: user, perms
+                                                                        'django.contrib.messages.context_processors.messages',
+                                                                    ],
+                                          },
+                                      },
+                                    ]
+
     Variables - Look Like: {{ variable }}
               - When the template engine encounters a variable, it evaluates that variable and replaces it with the result.
-              - Variable names consist of any combination of alphanumeric characters and the underscore ("_") but may not start with an underscore and a number.
+              - Variable names consist of any combination of alphanumeric characters and the underscore ("_") but may not start with an underscore and a number. You cannot have spaces or punctuation characters in variable names.
               - Use a dot(".") to access attributes of a variable.
-                Lookup order when a dot is found:
+              - Lookup order when a dot is encountered:
                     - Dictionary lookup
-                    - Attribute or method lookup
+                    - Attribute or Method lookup
                     - Numeric index lookup
+              - If you use a variable that doesn't exist, the template system will insert the value of the string_if_invalid option, which is set to '' (the empty string) by default.
     Filters   - Look like: {{ varname|filter1|filter2:argument }}
               - It can modify variables for display
+              - Filter arguments that contain spaces must be quoted
               - Some important filters:
-                a)  default:"default value"
-                b)  length
-                c)  filesizeformat
+                a)  default:"default value"     -- If a variable is false or empty
+                b)  length                      -- returns the length of the string or lists
+                c)  filesizeformat              -- human-readable file size i.e. 13KB, 4.1 MB, 102 bytes
                 d)  escape
                     safe
                 e) date:"date format similar to PHP"
@@ -171,6 +194,8 @@ Django Introduction
                 g)  urlencode
                 h)  upper or, lower or, title or, capfirst
                 i)  pluralize
+                j)  floatformat:3
+                k)  join:', '
 
     Tags      - Look like: {% tag %}
                        or, {% tag %}
@@ -184,16 +209,17 @@ Django Introduction
 
                 b) {% block block_name %}
                     ... contents ...
-                    {% endblock %}
+                   {% endblock %}
 
-                c) {% csrf_token %}
+                c) {% csrf_token %}          - used for CSRF protection
 
                 d) {% extends "base.html" %}
                     - Signals that this template extends a parent template.
                     - It must be the first template tag in that template. Template inheritance won’t work, otherwise.
                     - Child templates don’t have to define all parent blocks.
+                    - To get the content of the block from the parent template, use {{ block.super }}. Useful if you want to add to the contents of a parent block instead of completely overriding it.
                     - Variables created outside of a {% block %} using the template tag 'as' syntax can’t be used inside the block.
-                    - To get the content of the block from the parent template, use {{ block.super }}
+                    - {% block %} tags are evaluated first. That's why the content of a block is always overridden, ragardless of the truthiness of surrounding tags.
                     - Normally the template name is relative to the template loader's root directory. For example,
                         dir1/
                             template.html
@@ -243,8 +269,9 @@ Django Introduction
 
                 g) {% include './templatename.html' %}
                    or, {% include 'templatename.html' with var=val var1=val1 %}
+                   or, {% include 'templatename.html' with var=val only %}
 
-                   - It includes the contents of the template
+                   - It includes the contents of the template with the current context.
                    - The template name is relative to the template loader's root directory.
 
                 h) {% load static %}
@@ -262,6 +289,10 @@ Django Introduction
                         use {{ simplevarname }} here
                    {% endwith %}
 
+                k) {% filter filter1|filter2 %}
+                     ... content ...
+                   {% endfilter %}
+
     Comments  - Single line comment: {#  #}
               - {% comment %}
                   multi line
@@ -269,16 +300,28 @@ Django Introduction
                 {% endcomment %}
 
     Links >>
-    DTL Introduction : https://docs.djangoproject.com/en/4.0/ref/templates/language/
-    DTL Reference: https://docs.djangoproject.com/en/4.0/ref/templates/builtins/
-    DTL for Python Programmers: https://docs.djangoproject.com/en/4.0/ref/templates/api/
-    DTL : https://docs.djangoproject.com/en/4.0/topics/templates/
+    DTL Introduction : https://docs.djangoproject.com/en/4.2/ref/templates/language/
+    DTL Reference: https://docs.djangoproject.com/en/4.2/ref/templates/builtins/
+    DTL for Python Programmers: https://docs.djangoproject.com/en/4.2/ref/templates/api/
+    DTL : https://docs.djangoproject.com/en/4.2/topics/templates/
 
 8. HTTP Response Object: (project name = httpresponse)
 
-    Links >> https://docs.djangoproject.com/en/4.0/ref/request-response/#httpresponse-objects
     HttpResponseCodes >> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+    - Different Response codes:
+        2xx => Success:                     3xx => Redirection:
+            200 - Ok/Success                    301 - Permanent redirect
+            201 - Created                       302 - Temporary redirect
+            204 - No Content                    304 - Not modified
 
+        4xx => Client Error:                5xx => Server Error:
+            400 - Bad request                   500 - Internal server error
+            401 - Unauthorized                  501 - Not implemented
+            403 - Forbidden                     502 - Bad gateway
+            404 - Not found                     503 - Service unavailable
+            405 - Method not allowed            504 - Gateway timeout
+
+    Links >> https://docs.djangoproject.com/en/4.2/ref/request-response/#httpresponse-objects
     - HttpResponse:
         - HttpResponse class lives in the django.http module.
         - Each view is responsible for instantiating, populating, and returning an HttpResponse.
@@ -294,7 +337,7 @@ Django Introduction
 
    - Other classes: JsonResponse, StreamingHttpResponse, FileResponse
 
-   - Shortcut functions link >> https://docs.djangoproject.com/en/4.0/topics/http/shortcuts/
+   - Shortcut functions link >> https://docs.djangoproject.com/en/4.2/topics/http/shortcuts/
      Function configuration:
         >> render(request, template_name, context=None, content_type=None, status=None, using=None)
             - Set BACKEND to 'django.template.backends.django.DjangoTemplates' to configure a Django template engine. When APP_DIRS is True, DjangoTemplates engines look for templates in the templates subdirectory of installed applications.
@@ -308,7 +351,7 @@ Django Introduction
                  - HttpRequest object is defined in the django.http module.
 
                  HTTP headers >> https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
-                 HttpRequest Link >> https://docs.djangoproject.com/en/4.0/ref/request-response/#httprequest-objects
+                 HttpRequest Link >> https://docs.djangoproject.com/en/4.2/ref/request-response/#httprequest-objects
                  Python Magic Methods >> https://rszalski.github.io/magicmethods/
 
                 - Important properties:
@@ -321,28 +364,28 @@ Django Introduction
                     ->  COOKIES - a dictionary containing all cookies. Keys and values are strings.
                     ->  FILES   - a dictionary like object containing all uploaded files. Each key in FILES is the HTML name property value and each value in FILES is an UploadedFile object.
                     ->  META    - a dictionary containing all available HTTP headers.
-                                - some important headers:
+                                - some major headers:
                                     CONTENT_LENGTH, CONTENT_TYPE, HTTP_ACCEPT, HTTP_HOST, QUERY_STRING, REMOTE_ADDR, REMOTE_HOST, REQUEST_METHOD, SERVER_NAME, SERVER_PORT
 
                     --------------------------------------middleware------------------------------------------------------------------------------------------------------------------------------------------------
                     ->  session - a readable and writable, dictionary-like object that represents the current session.
                     ->  site    - an instance of Site or RequestSite as returned by get_current_site() representing the current site.
-                    ->  user    - An instance of AUTH_USER_MODEL representing the currently logged-in user. If the user isn't currently logged in, user will be set to an isntance of AnonymousUser. You can check using is_authenticated method.
+                    ->  user    - An instance of AUTH_USER_MODEL representing the currently logged-in user. If the user isn't currently logged in, user will be set to an instance of AnonymousUser. You can check using is_authenticated method.
                     --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    - QueryDict object:
+    - QueryDict object - a subclass of dictionary:
         -> __init__(query_string=None, mutable=False, encoding=None)
 
         ->  copy()                  - returns a copy of the object that is mutable
         -> __contains__(key)        - returns True if the given key is set
                                     - use "key in QueryDictObject" for checking presence of the key
 
-        ->  __getitem__(key)        - returns the value for the given key. For more than one value, returns the last one.
+        ->  __getitem__(key)        - returns the value for the given key. For more than one value, returns the last one. Raises KeyError if the key does not exists.
                                     - use QueryDictObject['key'] for accessing the key value
         ->  get(key, default=None)  - same as __getitem__(), except returns a default value if the key doesn't exist
         ->  getlist(key, default=None) - returns a list of the data with the requested key or an empty list
 
-        ->  __setitem__(key, value) - sets the given key to [value], can only be called on QueryDict.copy() object
+        ->  __setitem__(key, value) - sets the given key to [value], can only be called on QueryDict.copy() object as it is mutable.
                                     - use QueryDictObject['key']=value for setting that key value
         ->  setlist(key, list_)     - sets the given key to list_
         ->  appendlist(key, item)   - appends an item to the internal list associated with key
@@ -355,7 +398,7 @@ Django Introduction
 10. Django Forms: (project name = djangoforms)
 
     Link >>
-        Introduction : https://docs.djangoproject.com/en/4.0/topics/forms/
+        Introduction : https://docs.djangoproject.com/en/4.2/topics/forms/
 
     Django handles 3 distinct parts of the work involved in forms:
         Task 1 - preparing and restructuring data to make it ready for rendering
@@ -383,7 +426,7 @@ Django Introduction
             {{ field.field }} - Field instance from the form class to access Field attributes, ex: {{ field.field.max_length }}
 
     Link >>
-        django.forms API documentation : https://docs.djangoproject.com/en/4.0/ref/forms/api/#django.forms.Form
+        django.forms API documentation : https://docs.djangoproject.com/en/4.2/ref/forms/api/#django.forms.Form
 
     Form Class: A Form instance is either bound(capable of validating data) to a set of data, or unbound.
         -> To create an unbound Form instance: f = ContactForm()
@@ -405,38 +448,38 @@ Django Introduction
         -> f.cleaned_data - returns the cleaned(normalized) valid data and if the data does not validate then the cleaned_data dictionary does not contain this data
         -> f.is_multipart() - tells whether the form requires multipart encoding for submission
 
-        -> f.as_p(), f.as_ul(), f.as_table(), f.field_order, f.order_fields(field_order)
+        -> f.as_div(), f.as_p(), f.as_ul(), f.as_table(), f.field_order, f.order_fields(field_order)
 
     BoundField Class:
             - used to display HTML or access attributes for a single field of a Form instance.
             - the __str__() method of this object displays the HTML for this field
             - To retrieve a single BoundField, use dictionary lookup syntax on your form using the field's name as the key, form['field_name']
 
-        -> auto_id - the HTML id attribute for this BoundField, returns an empty string if Form.auto_id is False
+        -> auto_id      - the HTML id attribute for this BoundField, returns an empty string if Form.auto_id is False
         -> id_for_label - use this property to render(in HTML) the ID of this field
 
-        -> label - label of the field
-        -> label_tag() - render the label (in HTML) tag of a form field
+        -> label        - label of the field
+        -> label_tag()  - render the label (in HTML) tag of a form field
 
-        -> data - returns the data for this BoundField or None
-        -> value() - render the raw value of this field
+        -> data         - returns the data for this BoundField or None
+        -> value()      - render the raw value of this field
 
-        -> errors - returns errors of this bound field as a list like object
-        -> field - the form field instance from the form class that this BoundField wraps
-        -> form - the form instance this boundfield is bound to
+        -> errors       - returns errors of this bound field as a list like object
+        -> field        - the form field instance from the form class that this BoundField wraps
+        -> form         - the form instance this boundfield is bound to
 
-        -> help_text - help text of the field
-        -> is_hidden - true if hidden field
+        -> help_text    - help text of the field
+        -> is_hidden    - true if hidden field
 
-        -> html_name - the value of HTML name attribute
-        -> name - the name of this field in the (Django)form
+        -> html_name    - the value of HTML name attribute
+        -> name         - the name of this field in the (Django)form
 
     Form Fields:
-        Different types of form fields link : https://docs.djangoproject.com/en/4.0/ref/forms/fields/
+        Different types of form fields link : https://docs.djangoproject.com/en/4.2/ref/forms/fields/
 
         Core properties and methods:
             -> Field(**kwargs)
-            -> required=True/False, Default: True
+            -> required=True/False            [Default: True]
             -> label="human friendly label"
             -> label_suffix=" -> "
 
@@ -462,6 +505,20 @@ Django Introduction
             -> optional arguments: max_length, min_length, strip (=True default), empty_value (='' default)
             -> widget: TextInput that generates <input type="text" >
 
+        EmailField
+            -> empty value = content of 'empty_value' property
+            -> normalizes to python string
+            -> error message key: required, invalid
+            -> optional arguments: max_length, min_length, empty_value
+            -> widget: EmailInput that generates <input type="email">
+
+        URLField
+            -> empty value = content of 'empty_value' property
+            -> normalizes to python string
+            -> error message keys: required, invalid
+            -> arguments: max_length, min_length, empty_value
+            -> widget: URLInput that generates <input type="url">
+
         ChoiceField
             -> empty value = ''
             -> normalizes to python string
@@ -474,36 +531,29 @@ Django Introduction
             -> normalizes to a python datetime.date or, datetime.datetime or, datetime.time object
             -> error message key: required, invalid
             -> arguments: input_formats
-               default formats: https://docs.djangoproject.com/en/3.0/ref/settings/#std:setting-DATE_INPUT_FORMATS
+               default formats: https://docs.djangoproject.com/en/4.2/ref/settings/#std:setting-DATE_INPUT_FORMATS
             -> widget: DateInput, DateTimeInput, TimeInput that generates <input type="text" ... >
 
         DecimalField
             -> empty value = None
             -> normalizes to a python decimal value
             -> error message keys: required, invalid, max_value, min_value, max_digits, max_decimal_places, max_whole_digits
-            -> arguments: max_value, min_value, max_digits, decimal_places
+            -> arguments: max_value, min_value, max_digits, decimal_places, step_size
             -> widget: NumberInput that generates <input type="number">
 
         IntegerField
             -> empty value = None
             -> normalizes to python integer
-            -> error message keys: required, invalid, max_value, min_value
-            -> arguments: max_value, min_value
+            -> error message keys: required, invalid, max_value, min_value, step_size
+            -> arguments: max_value, min_value, step_size
             -> widget: NumberInput that generates <input type="number">
 
-        EmailField
-            -> empty value = ''
-            -> normalizes to python string
-            -> error message key: required, invalid
-            -> optional arguments: max_length, min_length, empty_value
-            -> widget: EmailInput that generates <input type="email">
-
-        URLField
-            -> empty value = ''
-            -> normalizes to python string
-            -> error message keys: required, invalid
-            -> arguments: max_length, min_length, empty_value
-            -> widget: URLInput that generates <input type="url">
+        FloatField
+            -> empty value = None
+            -> normalized to python float
+            -> error message keys: required, invalid, max_value, min_value, step_size
+            -> arguments: max_value, min_value, step_size
+            -> widget: NumberInput that generates <input type="number"> or, TextInput <input type="text">
 
         FileField
             -> empty value = None
@@ -518,7 +568,7 @@ Django Introduction
             -> widget: ClearableFileInput
             -> The UploadedFile object will have an additional 'image' attribute containing the Pillow Image instance.
 
-        Different Types of widgets: https://docs.djangoproject.com/en/4.0/ref/forms/widgets/
+        Different Types of widgets: https://docs.djangoproject.com/en/4.2/ref/forms/widgets/
             -> Widget(attrs=None), example: forms.TextInput(attrs={'size':10, 'title': 'Your name'})
 
             -> PasswordInput: <input type="password">
@@ -531,9 +581,9 @@ Django Introduction
 11. Validators in Django: (project name = customvalidators )
 
     Links >>
-        Validators: https://docs.djangoproject.com/en/4.0/ref/validators/
-        Form and Field validators: https://docs.djangoproject.com/en/4.0/ref/forms/validation/
-        Lazy translation: https://docs.djangoproject.com/en/4.0/topics/i18n/translation/ # to translate strings lazily – when the value is accessed rather than when they’re called.
+        Validators: https://docs.djangoproject.com/en/4.2/ref/validators/
+        Form and Field validators: https://docs.djangoproject.com/en/4.2/ref/forms/validation/
+        Lazy translation: https://docs.djangoproject.com/en/4.2/topics/i18n/translation/#lazy-translation # to translate strings lazily – when the value is accessed rather than when they’re called.
 
     Built-in validatiors:
         Module: from django.core import validators
@@ -572,7 +622,7 @@ Django Introduction
 12. File Uploads: (project name = fileupload)
 
     Python file read-write operations >> https://www.programiz.com/python-programming/file-operation
-    Links >> https://docs.djangoproject.com/en/4.0/topics/http/file-uploads/
+    Links >> https://docs.djangoproject.com/en/4.2/topics/http/file-uploads/
 
     Here,
     -> request.FILES will only contain data if the request method was POST and the <form> that posted the request has the attribute enctype="multipart/form-data"
@@ -581,28 +631,29 @@ Django Introduction
 
     UploadedFile Object:
         Links >>
-            UploadedFile object >> https://docs.djangoproject.com/en/4.0/ref/files/uploads/#django.core.files.uploadedfile.UploadedFile
+            UploadedFile object >> https://docs.djangoproject.com/en/4.2/ref/files/uploads/#django.core.files.uploadedfile.UploadedFile
             src Code >> https://docs.djangoproject.com/en/4.0/_modules/django/core/files/uploadedfile/
-            File object >> https://docs.djangoproject.com/en/4.0/ref/files/file/
+            File Object >> https://docs.djangoproject.com/en/4.2/ref/files/file/
 
         -> UploadedFile is inherited from File object.
         -> each entry of the dictionary of request.FILES returns an UploadedFile object
 
         UploadedFile object:
-        -> read() - reads the entire uploaded data
-        -> multiple_chunks(chunk_size=None) - returns True if the uploaded file is big enough to require reading in multiple chunks
-        -> chunks() - a generator returning chunks of the file
-        -> name - the name of the uploaded file
-        -> size - size in bytes of the uploaded file
-        -> content_type - the content-type header uploaded with the file (trust but verify)
-        -> charset - returns the charset of the file
+            -> read() - reads the entire uploaded data
+            -> multiple_chunks(chunk_size=None) - returns True if the uploaded file is big enough to require reading in multiple chunks
+            -> chunks() - a generator returning chunks of the file
+            -> name - the name of the uploaded file
+            -> size - size in bytes of the uploaded file
+            -> content_type - the content-type header uploaded with the file (trust but verify)
+            -> charset - returns the charset of the file
 
     FileSystemStorage class:
         Links >>
-            - https://docs.djangoproject.com/en/4.0/ref/files/storage/
-            - https://docs.djangoproject.com/en/4.0/topics/files/
+            - https://docs.djangoproject.com/en/4.2/ref/files/storage/
+            - https://docs.djangoproject.com/en/4.2/topics/files/
 
-        -> Module: from django.core.files.storage import FileSystemStorage
+        -> Module:
+                from django.core.files.storage import FileSystemStorage
         -> FileSystemStorage(location=None, base_url=None, file_permission_mode=None, directory_permission_mode=None)
         -> Default location is MEDIA_ROOT and default base_url is MEDIA_URL
         -> It inherits the Storage class
@@ -617,7 +668,7 @@ Django Introduction
             -> get_created_time(name) - returns a datetime of the creation time of the file
 
     URL configurations settings:
-        Link >> https://docs.djangoproject.com/en/4.0/ref/urls/#static
+        Link >> https://docs.djangoproject.com/en/4.2/ref/urls/#static
 
         Example:
             from django.conf import settings
@@ -669,8 +720,8 @@ Django Introduction
     Configuration:
     --------------
     Links >>
-        Database Configurations: https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-        Database Support Notes: https://docs.djangoproject.com/en/4.0/ref/databases/#mysql-notes
+        Database Configurations: https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+        Database Support Notes: https://docs.djangoproject.com/en/4.2/ref/databases/#mysql-notes
 
     - Django supports MySQL 5.6 and higher
     - Django uses default InnoDB storage engine (Fully transactional and supports foreign key reference)
@@ -712,7 +763,7 @@ Django Introduction
         -> To establish a connection with database:
             from django.db import connection
             >>  with connection.cursor() as c:
-                c.execute(...)
+                    c.execute(...)
             or,
             >>  c = connection.cursor()
                 try:
@@ -842,9 +893,9 @@ Django Introduction
     Link >> https://www.django-rest-framework.org/tutorial/1-serialization/
 
     Installationy:
-        - python -m pip install djangorestframework
+        -> py -m pip install djangorestframework
 
-Others:
-- https://docs.djangoproject.com/en/4.0/ref/utils/
-- https://docs.djangoproject.com/en/4.0/intro/tutorial02/#introducing-the-django-admin
-- https://docs.djangoproject.com/en/4.0/intro/tutorial07/#customize-the-admin-form
+19. Others:
+    - https://docs.djangoproject.com/en/4.0/ref/utils/
+    - https://docs.djangoproject.com/en/4.0/intro/tutorial02/#introducing-the-django-admin
+    - https://docs.djangoproject.com/en/4.0/intro/tutorial07/#customize-the-admin-form
