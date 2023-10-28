@@ -1,33 +1,37 @@
 # Created by 	- Mohammad Imam Hossain
 # Email			- imambuet11@gmail.com
-# Date 			- Sept. 24, 2022
+# Update Date 	- Oct 26, 2023
 # All rights reserved
 
 Django Models:
 ---------------
 Django Commands >>
-    - First Django app, part 2: https://docs.djangoproject.com/en/4.0/intro/tutorial02/
-    - Manage.py documentation: https://docs.djangoproject.com/en/4.0/ref/django-admin/
-        >> python manage.py makemigrations      #creates new migrations based on the changes detected to your models.
-                                                #Link>> https://docs.djangoproject.com/en/4.0/topics/migrations/
-        >> python manage.py sqlmigrate app_label version_number #prints the SQL for the named migration
-        >> python manage.py showmigrations      #shows all migrations in a project.
-        >> python manage.py migrate             #synchronizes the database state with the current set of models and migrations
+    - First Django app, part 2: https://docs.djangoproject.com/en/4.2/intro/tutorial02/
+    - Manage.py documentation: https://docs.djangoproject.com/en/4.2/ref/django-admin/
+        >> py manage.py makemigrations                  #creates new migrations based on the changes detected to your models.
+                                                        #Link>> https://docs.djangoproject.com/en/4.2/topics/migrations/
+        >> py manage.py sqlmigrate app_label version_number #displays the SQL statements for the named migration
+        >> py manage.py showmigrations                  #lists a project's migrations and their status
+        >> py manage.py migrate                         #synchronizes the database state with the current set of models and migrations. Responsible for applying and unapplying migrations.
 
-        >> python manage.py shell               #interactive python shell
-        >> python manage.py inspectdb           #introspects the database tables in the database pointed-to by the NAME setting and output a Django model module (a models.py file) to standard output.
-                                                #use this if you have a legacy database with which you'd like to use Django. The script will inspect the database and create a model for each table within it.
-        >> python manage.py flush               #removes all data from the database and re-executes any post-synchronization handlers.
-        >> python manage.py loaddata fixture [fixture ...] #Searches for and loads the contents of the named fixture into the database
+        >> py manage.py shell                           #interactive python shell
+        >> py manage.py inspectdb                       #introspects the database tables in the database pointed-to by the NAME setting and output a Django model module (a models.py file) to standard output.
+                                                        #use this if you have a legacy database with which you'd like to use Django. The script will inspect the database and create a model for each table within it.
+        >> py manage.py flush                           #removes all data from the database and re-executes any post-synchronization handlers.
+        >> py manage.py loaddata fixture [fixture ...]  #Searches for and loads the contents of the named fixture into the database
+
+        >> py manage.py dumpdata [app_label[.ModelName] [app_label[.ModelName] ...]]          #outputs to standard output/output file all data in the database associated with the named applications
+           --all --format FORMAT --exclude EXCLUDE --database DATABASE --output OUTPUT_FILE
 
 Django Model API:
 -----------------
 - A model is the single, definitive source of information about your data.
 - It contains the essential fields and behaviors of the data you’re storing. Generally, each model maps to a single database table.
+- Field name can't be a Python reserved word, or can't contain more than one underscore in a row, or can't end with an underscore.
 Links >>
-    - https://docs.djangoproject.com/en/4.0/topics/db/models/
-    - https://docs.djangoproject.com/en/4.0/ref/models/fields/
-    - https://docs.djangoproject.com/en/4.0/ref/models/options/
+    - https://docs.djangoproject.com/en/4.2/topics/db/models/
+    - https://docs.djangoproject.com/en/4.2/ref/models/fields/
+    - https://docs.djangoproject.com/en/4.2/ref/models/options/
 
 Model Field Options:
 --------------------
@@ -87,28 +91,23 @@ Model Field Types:
     -> ImageField(upload_to=None, max_length=100, height_field=None, width_field=None, **options)
     -> FilePathField(...)
 
-Model Meta options:
--------------------
-    - abstract = True       ; this model will be an abstract base class
-    - app_label = 'myapp'   ; if a model is defined outside of an application in INSTALLED_APPS, it must declare which app it belongs to
-    - db_table = 'table_name' ; the name of the database table to use for this model
-    - db_tablespace = 'tablespace_name' ; the name of the database tablespace to use for this model
-    - ordering = ['col1', '-col2'] ; the default ordering for the object, for use when obtaining lists of objects
-    - unique_together = ['col1', 'col2'] ; sets of field names that taken together, must be unique
-    - verbose_name = "human-readable name for the object"
-
-
-Relationship Fields:
----------------------
+Relationship Field Types:
+-------------------------
     -> ForeignKey(to, on_delete, **options)
         - a many-to-one relationship
+        - models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
         - for recursive relationship, models.ForeignKey('self', on_delete=models.CASCADE)
         - on_delete = CASCADE/PROTECT/RESTRICT/SET NULL/SET DEFAULT/DO_NOTHING
-        - models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+        - related_name = The name to use for the relation from the related object back to this one. It’s also the default value for related_query_name.
+        - If you’d prefer Django not to create a backwards relation, set related_name to '+'. Ex: related_name="+"
+        - to_field = The field on the related object that the relation is to. By default, Django uses the primary key of the related object. If you reference a different field, that field must have unique=True.
+
     -> ManyToManyField(to, **options)
         - a many-to-many relationship
         - through = this option specify the Django model that represents the intermediate table
+        - through_fields = Only used when a custom intermediary model is specified. Django will normally determine which fields of the intermediary model to use in order to establish a many-to-many relationship automatically. If you have more than one foreign key and through_fields is not specified, a validation error will be raised.
         - models.ManyToManyField(Topping)
+
     -> OneToOneField(to, on_delete, parent_link=False, **options)
         - a one-to-one relationship
         - models.OneToOneField(Piece, on_delete=models.CASCADE)
@@ -117,16 +116,43 @@ Relationship Fields:
        For example, if the Manufacturer model is defined in another application called production, you’d need to use:
         - models.ForeignKey('production.Manufacturer', on_delete=models.CASCADE)
 
+Model Meta Class Attributes:
+----------------------------
+    - abstract = True       ; this model will be an abstract base class
+    - app_label = 'myapp'   ; if a model is defined outside of an application in INSTALLED_APPS, it must declare which app it belongs to
+    - db_table = 'table_name' ; the name of the database table to use for this model
+    - db_tablespace = 'tablespace_name' ; the name of the database tablespace to use for this model
+    - ordering = ['col1', '-col2'] ; the default ordering for the object, for use when obtaining lists of objects
+    - unique_together = ['col1', 'col2'] ; sets of field names that taken together, must be unique
+    - indexes = [ models.Index(fields=["last_name", "first_name"]), ]
+    - verbose_name = "human-readable name for the object"
+    - default_related_name, default_namager_name, default_permissions, label
+
+Model Predefined Attribute:
+---------------------------
+    -> objects:
+            - The most important attribute of a model is the Manager.
+            - It’s the interface through which database query operations are provided to Django models and is used to retrieve the instances from the database.
+            - If no custom Manager is defined, the default name is objects.
+            - Managers are only accessible via model classes, not the model instances.
+
+Model Predefined Method:
+------------------------
+    >> __str__():
+            - A Python “magic method” that returns a string representation of any object.
+    >> get_absolute_url():
+            - This tells Django how to calculate the URL for an object.
+
 Model Instance Reference:
---------------------------
-Link: https://docs.djangoproject.com/en/4.0/ref/models/instances/
+-------------------------
+Link: https://docs.djangoproject.com/en/4.2/ref/models/instances/
 
 By default, Django gives each model an auto-incrementing primary key with the type specified per app in AppConfig.default_auto_field
 or globally in the DEFAULT_AUTO_FIELD setting. For example,
     id = models.BigAutoField(primary_key=True)
-For convenience, each model has an AutoField named id by default unless you explicitly specity primary_key=True on a field in your model.
+For convenience, each model has an AutoField named id by default unless you explicitly specify primary_key=True on a field in your model.
     -> model attribute: pk
-    -> Equivalent statements:
+        Equivalent statements:
             >> Blog.objects.get(id__exact=14)  # Explicit form
             >> Blog.objects.get(id=14)         # __exact is implied
             >> Blog.objects.get(pk=14)         # pk implies id__exact
@@ -137,7 +163,7 @@ For convenience, each model has an AutoField named id by default unless you expl
 
 QuerySet API Reference:
 ------------------------
-Link: https://docs.djangoproject.com/en/4.0/ref/models/querysets/
+Link: https://docs.djangoproject.com/en/4.2/ref/models/querysets/
 
     QuerySet(model=None, query=None, using=None, hints=None)
     - You get a QuerySet by using your model's Manager. Each model has at least one Manager, and it’s called objects by default. Access it directly via the model class
@@ -167,8 +193,8 @@ Link: https://docs.djangoproject.com/en/4.0/ref/models/querysets/
 
         union(*other_qs, all=False) - uses SQL's UNION operator to combine the results of two or more QuerySets.
                                     - To allow duplicate values, use the all=True argument.
-        intersection()      - uses SQL's INTERSECT operator to return the shared elements of two or more QuerySets.
-        difference()        - uses SQL's EXCEPT operator to keep only elements present in the QuerySet but not in some other QuerySets.
+        intersection()              - uses SQL's INTERSECT operator to return the shared elements of two or more QuerySets.
+        difference()                - uses SQL's EXCEPT operator to keep only elements present in the QuerySet but not in some other QuerySets.
 
         raw(raw_query, params=None, translation=None) - takes a raw SQL query, executes it, and returns a RawQuerySet instance.
         AND(&)          - Model.objects.filter(x=1) & Model.objects.filter(y=2)
@@ -179,14 +205,16 @@ Link: https://docs.djangoproject.com/en/4.0/ref/models/querysets/
         OR(|)           - Model.objects.filter(x=1) | Model.objects.filter(y=2)
                         - from django.db.models import Q
                           Model.objects.filter(Q(x=1) | Q(y=2))
-
+        XOR(^)          - Model.objects.filter(x=1) ^ Model.objects.filter(y=2)
+                        - from django.db.models import Q
+                          Model.objects.filter(Q(x=1) ^ Q(y=2))
 
         Other Methods:
         --------------
         annotate(*args, **kwargs) - annotate each object in the QuerySet with the provided list of query expressions.
         values_list(*fields, flat=False, named=False) - returns tuples when iterated over
         none()          - Entry.objects.none() # a queryset that never returns any objects
-        extra(select=None, where=None,params=None,tables=None,oder_by=None,select_params=None) - sometimes Django query syntax by itself can't easily express a complex WHERE clause. For these edge cases, Django provides the extra() QuerySet modifiier.
+        extra(select=None, where=None, params=None, tables=None, order_by=None, select_params=None) - sometimes Django query syntax by itself can't easily express a complex WHERE clause. For these edge cases, Django provides the extra() QuerySet modifiier.
         defer(*fields)  - during initial data fetch if you are not sure to fetch contains fields data then you can tell Django not to retrieve them from the database
         only(*fields)   - call it with the fields that should not be deferred when retrieving a model.
         using(alias)    - Controls which database the QuerySet will be evaluated against if you are using more than one database.
@@ -266,19 +294,18 @@ Link: https://docs.djangoproject.com/en/4.0/ref/models/querysets/
 
     Database Functions:
     -------------------
-    Link: https://docs.djangoproject.com/en/4.0/ref/models/database-functions/
+    Link: https://docs.djangoproject.com/en/4.2/ref/models/database-functions/
     Module: from djagno.db.models.functions import func_name
         - Coalesce(), Now()
         - Abs(), ACos(), ASin(), ATan(), Ceil(), Cos, Cot, Degrees, Exp(), Floor(), Ln(), Log(), Mod(), Pi(), Power(), Radians(), Random(), Round(), Sign(), Sin(), Sqrt(), Tan()
         - Concat(), Left(), Length(), Lower(), LPad(), LTrim(), MD5(), Replace(), Reverse(), Right(), RPad(), RTrim(), SHA1, SHA224, SHA256, SHA384, SHA 512, StrIndex(), Substr(), Trim(), Upper()
 
-Making Queries: https://docs.djangoproject.com/en/4.0/topics/db/queries/
-    - Each model has at least one Manager, and it’s called objects by default. Access it directly via the model class.
+Making Queries: https://docs.djangoproject.com/en/4.2/topics/db/queries/
 
 Query Operations:
 ------------------
 - Related Objects Reference:
-    Link: https://docs.djangoproject.com/en/4.0/ref/models/relations/
+    Link: https://docs.djangoproject.com/en/4.2/ref/models/relations/
     -  Used in one-to-many(models.ForeignKey) and many-to-many(models.ManyToManyField) related context.
         Blog(...) <------ Entry(blog(FK),...)
 
@@ -287,10 +314,10 @@ Query Operations:
         -> b.entry_set.remove(e) #disassocites
         -> b.entry_set.clear()   #disassociates all
         -> b.entry_set.set(new_list_of_objects) #replace associations
-        -> e=b.entry_set.create(headline="hello",body_text="hi",pub_date=...) #create an object and associates
+        -> e = b.entry_set.create(headline="hello",body_text="hi",pub_date=...) #create an object and associates
 
 - One to One:
-    Link: https://docs.djangoproject.com/en/4.0/topics/db/examples/one_to_one/
+    Link: https://docs.djangoproject.com/en/4.2/topics/db/examples/one_to_one/
 
     Place(name, address) <---------> Restaurant(place(FK), serves_hot_dogs, serves_pizza)
 
@@ -313,7 +340,7 @@ Query Operations:
         Restaurant.objects.get(place__name__startswith='Pizza')
 
 - Many to One:
-    Link: https://docs.djangoproject.com/en/4.0/topics/db/examples/many_to_one/
+    Link: https://docs.djangoproject.com/en/4.2/topics/db/examples/many_to_one/
 
     Reporter(first_name, last_name, email) <---------- Article(headline, pub_date, reporter(FK))
 
@@ -337,7 +364,7 @@ Query Operations:
         Article.objects.filter(reporter__first_name='John')
         Reporter.objects.filter(article__pk=1)
 
-- Many to Many: https://docs.djangoproject.com/en/4.0/topics/db/examples/many_to_many/
+- Many to Many: https://docs.djangoproject.com/en/4.2/topics/db/examples/many_to_many/
 
     Publication(title) ---------------- Article(headline, publications(FK))
 
@@ -367,7 +394,7 @@ Query Operations:
         Publication.objects.filter(article__headline__startswith="NASA")
 
 - Aggregate operations:
-    Link: https://docs.djangoproject.com/en/4.0/topics/db/aggregation/
+    Link: https://docs.djangoproject.com/en/4.2/topics/db/aggregation/
 
     Author(name, age)   ---------------------------  Book(name, pages, price, rating, authors(Foreign Key), publisher(Foreign key), pubdate)  ---------------  Store(name, books(Foreign Key))
                                                                                                                 |
@@ -393,6 +420,7 @@ Query Operations:
           q[0].num_authors
         - Author.objects.values('name').annotate(average_rating=Avg('book__rating'))
           It groups authors by their name
+        - Book.objects.annotate(num_authors=Count("authors")).filter(num_authors__gt=1)
         - Combining multiple aggregations with annotate() will yield the wrong results because joins are used instead of subqueries.
           Wrong: Book.objects.annotate(Count('authors'), Count('store'))
           Right: Book.objects.annotate(Count('authors', distinct=True), Count('store', distinct=True))
@@ -400,11 +428,57 @@ Query Operations:
 
 
 More Read:
-- How to provide initial data for models: https://docs.djangoproject.com/en/4.0/howto/initial-data/
-    - By default, Django looks in the 'fixtures' directory inside each app for fixtures.
-    - You can set the FIXTURE_DIRS setting to a list of additional directories where Django should look.
-    - When running manage.py loaddata, you can also specify a path to a fixture file, which overrides searching the usual directories.
+- How to provide initial data for models: https://docs.djangoproject.com/en/4.2/howto/initial-data/
+    Way 1:
+        - Ref: https://docs.djangoproject.com/en/4.2/topics/migrations/#data-migrations
+        - Migrations that alter data are usually called “data migrations”.
+        - Django can’t automatically generate data migrations for you, as it does with schema migrations, but it’s not very hard to write them.
+          Migration files in Django are made up of Operations, and the main operation you use for data migrations is RunPython.
+        - Process:
+            - make an empty migration file
+                $ python manage.py makemigrations --empty yourappname
+            - open up the file; it should look something like this:
+                # Generated by Django A.B on YYYY-MM-DD HH:MM
+                from django.db import migrations
 
-- How to integrate Django with a legacy database: https://docs.djangoproject.com/en/4.0/howto/legacy-databases/
+
+                class Migration(migrations.Migration):
+                    dependencies = [
+                        ("yourappname", "0001_initial"),
+                    ]
+
+                    operations = []
+
+            - Now, all you need to do is create a new function and have RunPython use it.
+              RunPython expects a callable as its argument which takes two arguments
+                          - the first is an app registry that has the historical versions of all your models loaded into it to match where in your history the migration sits, and
+                          - the second is a SchemaEditor, which you can use to manually effect database schema changes (but beware, doing this can confuse the migration autodetector!)
+                  # Generated by Django A.B on YYYY-MM-DD HH:MM
+                  from django.db import migrations
+
+
+                  class Migration(migrations.Migration):
+                      dependencies = [
+                          ("yourappname", "0001_initial"),
+                      ]
+
+                      operations = [
+                          migrations.RunPython(combine_names),
+                      ]
+
+    Way 2:
+        - Ref: https://docs.djangoproject.com/en/4.2/topics/db/fixtures/#fixtures-explanation
+        - A fixture is a collection of data that Django knows how to import into a database.
+        - The most straightforward way of creating a fixture if you’ve already got some data is to use the manage.py dumpdata command. Or, you can write fixtures by hand; fixtures can be written as JSON, XML or YAML (with PyYAML installed) documents.
+            $ py manage.py loaddata <fixturename>
+        - Fixtures may be compressed in zip, gz, bz2, lzma, or xz format.
+        - By default, Django looks in the 'fixtures' directory inside each app for fixtures.
+        - You can set the FIXTURE_DIRS setting to a list of additional directories where Django should look.
+        - When running manage.py loaddata, you can also specify a path to a fixture file, which overrides searching the usual directories.
+        - The order in which fixtures are loaded follows the order in which they are listed.
+
+- How to integrate Django with a legacy database: https://docs.djangoproject.com/en/4.2/howto/legacy-databases/
+    - python manage.py inspectdb
+    - python manage.py inspectdb > models.py
 
 -------------------------- <<<<< THE END >>>>> ------------------------------------------------------
